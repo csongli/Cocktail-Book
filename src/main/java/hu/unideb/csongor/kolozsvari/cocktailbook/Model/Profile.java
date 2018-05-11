@@ -1,0 +1,77 @@
+package hu.unideb.csongor.kolozsvari.cocktailbook.Model;
+
+import com.google.gson.annotations.Expose;
+
+import java.util.List;
+
+/**
+ * Represents the users profile, which contains their favourite cocktails, and based on this their taste on the flavor map.
+ */
+public class Profile {
+    /** List of favourite cocktails.*/
+    List<Cocktail> favouriteCocktails;
+
+    /** The coordinate of the users taste on the flavor map.*/
+    Coordinate myFlavorMapPoint;
+
+    /** The radius in which recommendations are given.*/
+    double recommendationRadius;
+
+    /**
+     * Empty constructor.
+     */
+    public Profile() {
+    }
+
+    /**
+     * Constructor for the profile class.
+     * @param favouriteCocktails list of favourite cocktails.
+     * @param myFlavorMapPoint the coordinate of the users taste on the flavor map.
+     * @param recommendationRadius radius in which recommendations are given.
+     */
+    public Profile(List<Cocktail> favouriteCocktails, Coordinate myFlavorMapPoint, double recommendationRadius) {
+        this.favouriteCocktails = favouriteCocktails;
+        this.myFlavorMapPoint = myFlavorMapPoint;
+        this.recommendationRadius = recommendationRadius;
+    }
+
+    /**
+     * Getter method for favouriteCocktails.
+     * @return the favourite cocktails of the user.
+     */
+    public List<Cocktail> getFavouriteCocktails() {
+        return favouriteCocktails;
+    }
+
+    /**
+     * Getter method for myFlavorMapPoint.
+     * @return the coordinate of the users taste on the flavor map.
+     */
+    public Coordinate getMyFlavorMapPoint() {
+        return myFlavorMapPoint;
+    }
+
+    /**
+     * Getter method for recommendationRadius.
+     * @return the radius in which recommendations are given.
+     */
+    public double getRecommendationRadius() {
+        return recommendationRadius;
+    }
+
+    /** Setter method for {@code favouriteCocktails}. */
+    public void setFavouriteCocktails(List<Cocktail> favouriteCocktails) {
+        this.favouriteCocktails = favouriteCocktails;
+    }
+
+    /** Setter method for {@code myFlavorMapPoint}. */
+    public void setMyFlavorMapPoint(Coordinate myFlavorMapPoint) {
+        this.myFlavorMapPoint = myFlavorMapPoint;
+    }
+
+    /** Setter method for {@code recommendationRadius}. */
+    public void setRecommendationRadius(double recommendationRadius) {
+        this.recommendationRadius = recommendationRadius;
+    }
+
+}

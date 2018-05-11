@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.unideb.csongor.kolozsvari.cocktailbook.View.MainWindowController">
+   <children>
+      <VBox VBox.vgrow="ALWAYS">
+         <children>
+            <FlowPane alignment="CENTER" VBox.vgrow="ALWAYS">
+               <children>
+                  <Label text="Name+Logo" />
+               </children>
+            </FlowPane>
+            <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
+               <children>
+                  <Button fx:id="buttonCocktailList" mnemonicParsing="false" onAction="#handleButtonCocktailListAction" text="Cocktail list" HBox.hgrow="ALWAYS" />
+                  <Button fx:id="buttonIngredientList" mnemonicParsing="false" onAction="#handleButtonIngredientListAction" text="Ingredient list" HBox.hgrow="ALWAYS" />
+                  <Button fx:id="buttonProfileView" mnemonicParsing="false" onAction="#handleButtonProfileViewAction" text="Profile" HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <FlowPane alignment="CENTER" VBox.vgrow="ALWAYS">
+                     <children>
+                        <ComboBox editable="true" promptText="Search" />
+                        <Button fx:id="buttonSearch" mnemonicParsing="false" onAction="#handleButtonSearchAction" text="Search" />
+                     </children>
+                  </FlowPane>
+                  <VBox alignment="CENTER" disable="true" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label text="ingredient list" VBox.vgrow="ALWAYS" />
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
+</VBox>
