@@ -21,7 +21,7 @@ You can run the application with the following commands:
 
 License
 -------
-This game is available under the MIT License. For specific information on other resources used (such as images and fonts), please refer to the Used Resources section.
+This application is available under the MIT License. For specific information on other resources used (such as images and fonts), please refer to the Used Resources section.
 
 Resources Used
 -----------
