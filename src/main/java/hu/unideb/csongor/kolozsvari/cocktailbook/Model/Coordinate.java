@@ -2,6 +2,8 @@ package hu.unideb.csongor.kolozsvari.cocktailbook.Model;
 
 import com.google.gson.annotations.Expose;
 
+import java.util.Objects;
+
 /**
  * Represents a Coordinate on the flavor map, which consists of two numbers that represent the sweetness and dryness of the cocktail.
  */
@@ -30,6 +32,12 @@ public class Coordinate {
     public Coordinate() {
     }
 
+    public boolean isInRadius(Coordinate other, double radius){
+        return ((this.x + radius >= other.getX()) && (this.x - radius <= other.getX ()) &&
+                ((this.y + radius >= other.getY()) && (this.y - radius <= other.getY())));
+    }
+
+
     /**
      * Getter method for x.
      * @return x axis coordinate.
@@ -54,5 +62,27 @@ public class Coordinate {
     /** Setter method for {@code y} coordinate. */
     public void setY(Float y) {
         this.y = y;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Coordinate that = (Coordinate) o;
+        return Objects.equals(x, that.x) &&
+                Objects.equals(y, that.y);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
+    }
+
+    @Override
+    public String toString() {
+        return "Coordinate{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
     }
 }

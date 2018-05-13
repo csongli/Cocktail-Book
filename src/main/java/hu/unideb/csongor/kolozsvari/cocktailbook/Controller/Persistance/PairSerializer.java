@@ -16,8 +16,8 @@ public class PairSerializer implements JsonSerializer<Pair> {
     @Override
     public JsonElement serialize(final Pair value, final Type type, final JsonSerializationContext context) {
         final JsonObject jsonObj = new JsonObject();
-        jsonObj.add("ingredient", context.serialize(value.getKey()));
-        jsonObj.add("quantity", context.serialize(value.getValue()));
+        jsonObj.add("key", context.serialize(value.getKey()));
+        jsonObj.add("value", context.serialize(value.getValue()));
         return jsonObj;
     }
 }

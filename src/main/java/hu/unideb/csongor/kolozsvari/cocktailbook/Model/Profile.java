@@ -2,6 +2,7 @@ package hu.unideb.csongor.kolozsvari.cocktailbook.Model;
 
 import com.google.gson.annotations.Expose;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,6 +22,10 @@ public class Profile {
      * Empty constructor.
      */
     public Profile() {
+        System.out.println("Profile constructor");
+        this.favouriteCocktails = new ArrayList<>();
+        this.myFlavorMapPoint = new Coordinate((float) 0,(float) 0);
+        this.recommendationRadius = 1;
     }
 
     /**
@@ -74,4 +79,12 @@ public class Profile {
         this.recommendationRadius = recommendationRadius;
     }
 
+    @Override
+    public String toString() {
+        return "Profile{" +
+                "favouriteCocktails=" + favouriteCocktails +
+                ", myFlavorMapPoint=" + myFlavorMapPoint +
+                ", recommendationRadius=" + recommendationRadius +
+                '}';
+    }
 }

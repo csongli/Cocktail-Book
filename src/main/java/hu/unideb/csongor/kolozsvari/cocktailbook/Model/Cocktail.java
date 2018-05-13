@@ -1,7 +1,11 @@
 package hu.unideb.csongor.kolozsvari.cocktailbook.Model;
 import com.google.gson.annotations.Expose;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Represents a cocktail, that has a set of ingredients and a coordinate on the flavor map.
@@ -27,6 +31,8 @@ public class Cocktail {
     @Expose(serialize = true, deserialize = true)
     private String imgPath;
 
+    @Expose(serialize = false, deserialize = false)
+    private static List<Cocktail> allCocktails;
 
     /**
      * Constructor for the cocktail class.
@@ -48,6 +54,24 @@ public class Cocktail {
      * Empty constructor for cocktails.
      */
     public Cocktail() { }
+
+    //todo some javadocs
+
+    /**
+     *
+     * @return
+     */
+    public static List<Cocktail> getAllCocktails() {
+        return allCocktails;
+    }
+
+    /**
+     *
+     * @param allCocktails
+     */
+    public static void setAllCocktails(List<Cocktail> allCocktails) {
+        Cocktail.allCocktails = allCocktails;
+    }
 
     /**
      * Getter method for ingredients.
@@ -112,6 +136,33 @@ public class Cocktail {
     /** Setter method for {@code imgPath}. */
     public void setImgPath(String imgPath) {
         this.imgPath = imgPath;
+    }
+
+    public ArrayList<String> getIngredientNames(){
+        return (ArrayList) ingredients.stream().map((e) -> e.getKey().getName()).collect(Collectors.toList());
+    }
+
+    public ArrayList<String> getIngredientQuanities(){
+        return (ArrayList) ingredients.stream().map((e) -> e.getValue().getAmount() + " " + e.getValue().getType())
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cocktail cocktail = (Cocktail) o;
+        return Objects.equals(ingredients, cocktail.ingredients) &&
+                Objects.equals(flavorMapCoordinate, cocktail.flavorMapCoordinate) &&
+                Objects.equals(name, cocktail.name) &&
+                Objects.equals(description, cocktail.description) &&
+                Objects.equals(imgPath, cocktail.imgPath);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(ingredients, flavorMapCoordinate, name, description, imgPath);
     }
 
     @Override

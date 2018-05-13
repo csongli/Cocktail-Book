@@ -2,6 +2,9 @@ package hu.unideb.csongor.kolozsvari.cocktailbook.Model;
 
 import com.google.gson.annotations.Expose;
 
+import java.util.List;
+import java.util.Objects;
+
 /**
  * Represents an ingredient of a cocktail, that has a certain type which may have subtypes.
  */
@@ -22,6 +25,9 @@ public class Ingredient {
     @Expose(serialize = true, deserialize = true)
     private String imgPath;
 
+    @Expose(serialize = false, deserialize = false)
+    private static List<Ingredient> allIngredients;
+
     /**
      * Construcor for the ingredient class.
      * @param type the type of the ingredient.
@@ -40,6 +46,15 @@ public class Ingredient {
      * Empty constructor.
      */
     public Ingredient() {
+    }
+
+
+    public static void setAllIngredients(List<Ingredient> allIngredients) {
+        Ingredient.allIngredients = allIngredients;
+    }
+
+    public static List<Ingredient> getAllIngredients() {
+        return allIngredients;
     }
 
     /**
@@ -92,5 +107,32 @@ public class Ingredient {
     /** Setter method for {@code imgPath}. */
     public void setImgPath(String imgPath) {
         this.imgPath = imgPath;
+    }
+
+    @Override
+    public String toString() {
+        return "Ingredient{" +
+                "type=" + type +
+                ", subType=" + subType +
+                ", name='" + name + '\'' +
+                ", imgPath='" + imgPath + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Ingredient that = (Ingredient) o;
+        return type == that.type &&
+                subType == that.subType &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(imgPath, that.imgPath);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(type, subType, name, imgPath);
     }
 }

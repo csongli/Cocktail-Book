@@ -2,16 +2,17 @@ package hu.unideb.csongor.kolozsvari.cocktailbook.Controller.Persistance;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import hu.unideb.csongor.kolozsvari.cocktailbook.Model.Cocktail;
-import hu.unideb.csongor.kolozsvari.cocktailbook.Model.Ingredient;
-import hu.unideb.csongor.kolozsvari.cocktailbook.Model.Profile;
-import javafx.util.Pair;
+import com.google.gson.reflect.TypeToken;
+import hu.unideb.csongor.kolozsvari.cocktailbook.Model.*;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 public class JSONUtils {
     public static final Logger logger = LoggerFactory.getLogger(JSONUtils.class);
@@ -34,6 +35,13 @@ public class JSONUtils {
         return json;
     }
 
+    public Profile deserializeProfile(String json){
+        Profile profile = new Profile();
+        profile = gson.fromJson(json, Profile.class);
+        logger.info("The deserialized profile:\n{}", profile);
+        return profile;
+    }
+
     public Cocktail deserializeCocktail(String json){
         Cocktail cocktail = new Cocktail();
         cocktail = gson.fromJson(json, Cocktail.class);
@@ -47,14 +55,28 @@ public class JSONUtils {
         return ingredient;
     }
 
+    public List<CocktailEntity> deserializeCocktailList(String json){
+        Type listType = new TypeToken<ArrayList<CocktailEntity>>(){}.getType();
+        List<CocktailEntity> cocktailEntities = gson.fromJson(json, listType);
+        logger.info("Deserialized all cocktailEntities: " + cocktailEntities);
+        return cocktailEntities;
+    }
+
+    public List<Ingredient> deserializeIngredientList(String json){
+        Type listType = new TypeToken<ArrayList<Ingredient>>(){}.getType();
+        List<Ingredient> ingredients = gson.fromJson(json, listType);
+        logger.info("Deserialized all ingredients: " + ingredients);
+        return ingredients;
+    }
+
     public String readJSONfromFile (String filePath){
+        logger.info("Reading file: " + filePath);
         String result = "";
         try {
             InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream(filePath);
             result = IOUtils.toString(this.getClass().getClassLoader().getResourceAsStream(filePath),"UTF-8");
         }
         catch(IOException e){
-            System.out.println("IO Exception");
             logger.error("Exception while reading {}", filePath);
             logger.error(e.getMessage());
         }

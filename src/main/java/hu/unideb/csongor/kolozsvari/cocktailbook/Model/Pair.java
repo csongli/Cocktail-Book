@@ -1,6 +1,7 @@
 package hu.unideb.csongor.kolozsvari.cocktailbook.Model;
 
 public class Pair<U, V> {
+
     private final U key;
     private final V value;
 

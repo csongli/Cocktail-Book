@@ -2,6 +2,8 @@ package hu.unideb.csongor.kolozsvari.cocktailbook.Model;
 
 import com.google.gson.annotations.Expose;
 
+import java.util.Objects;
+
 /**
  * Represents the quantity of an ingredient need for a cocktail. Contains the type of the quantity and its amount.
  */
@@ -54,5 +56,19 @@ public class Quantity {
     /** Setter method for {@code amount}. */
     public void setAmount(Float amount) {
         this.amount = amount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Quantity quantity = (Quantity) o;
+        return type == quantity.type &&
+                Objects.equals(amount, quantity.amount);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(type, amount);
     }
 }
