@@ -1,13 +1,16 @@
+//CHECKSTYLE:OFF
 package hu.unideb.csongor.kolozsvari.cocktailbook.View;
 
 import hu.unideb.csongor.kolozsvari.cocktailbook.Controller.ProfileController;
 import hu.unideb.csongor.kolozsvari.cocktailbook.Controller.SearchController;
+import hu.unideb.csongor.kolozsvari.cocktailbook.Model.Cocktail;
 import hu.unideb.csongor.kolozsvari.cocktailbook.Model.Coordinate;
 import hu.unideb.csongor.kolozsvari.cocktailbook.Model.Profile;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -16,8 +19,15 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,32 +47,11 @@ public class ProfileViewController implements Initializable {
     private final int yAxisMax = 10;
     private final int yAxisMin = -10;
     private final int yAxisTick = 1;
-
-
-    public Profile getProfile() {
-        return profile;
-    }
-
-    public void setProfile(Profile profile) {
-        logger.info("setProfile " + profile);
-        this.profile = profile;
-        profileController = new ProfileController(profile);
-        setupFlavorMap();
-        setupProfileLabels();
-    }
-
-    public SearchController getSearchController() {
-        return searchController;
-    }
-
-    public void setSearchController(SearchController searchController) {
-        this.searchController = searchController;
-    }
-
+    private final int gridColNumber = 3;
     public static final Logger logger = LoggerFactory.getLogger(ProfileViewController.class);
 
-    private final int gridColNumber = 3;
-
+    @FXML
+    GridPane favoriteCocktailsGridPane;;
     @FXML
     Button profileBackButton;
     @FXML
@@ -94,8 +83,8 @@ public class ProfileViewController implements Initializable {
             Scene scene = new Scene(root);
 
             MainWindowController mainWindowController = loader.getController();
-            mainWindowController.setProfile(profile);
-            mainWindowController.setSearchController(searchController);
+            mainWindowController.initializeProfile(profile);
+            mainWindowController.upadateSearchController(searchController);
 
             scene.getStylesheets().add("style.css");
             stage.setScene(scene);
@@ -148,8 +137,8 @@ public class ProfileViewController implements Initializable {
             Scene scene = new Scene(root);
 
             CocktailListController cocktailListController = loader.getController();
-            cocktailListController.setProfile(profile);
-            cocktailListController.setSearchController(searchController);
+            cocktailListController.initializeProfile(profile);
+            cocktailListController.updateSearchController(searchController);
             cocktailListController.setCocktailList(searchController.searchByRadius(profile.getMyFlavorMapPoint(),
                     profile.getRecommendationRadius()));
 
@@ -173,6 +162,83 @@ public class ProfileViewController implements Initializable {
         logger.info("Clicked more recommendations.");
         profileController.showMoreRecommendations();
         recommendationRadiusLabel.setText("Recommendation threshold: " + profile.getRecommendationRadius());
+    }
+
+    private void loadFavoriteCocktails(){
+        int rowIndex = 0, colIndex = 0;
+        for (Cocktail cocktail : profile.getFavouriteCocktails()) {
+            BorderPane borderPane = new BorderPane();
+            HBox nameHbox = new HBox();
+            ImageView imageView = new ImageView();
+            ScrollPane scrollPane = new ScrollPane();
+            Label label = new Label();
+            borderPane.getStyleClass().add("cocktail-pane");
+            borderPane.setId("cocktail-pane");
+            Image image = new Image(getClass().getClassLoader().getResourceAsStream("images/placeholder.png"));
+            if (getClass().getClassLoader().getResource("images/Cocktails/" + cocktail.getImgPath()) != null) {
+                image = new Image(getClass().getClassLoader()
+                        .getResourceAsStream("images/Cocktails/" + cocktail.getImgPath()));
+            }
+            scrollPane.setMaxHeight(180);
+            scrollPane.setMaxWidth(180);
+
+            scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            scrollPane.setPannable(false);
+            scrollPane.setMouseTransparent(true);
+
+            imageView.setImage(image);
+            if(image.getHeight() > image.getWidth()){
+                imageView.setFitWidth(180);
+            } else{
+                imageView.setFitHeight(180);
+            }
+
+            imageView.setPreserveRatio(true);
+            scrollPane.setContent(imageView);
+            borderPane.setCenter(scrollPane);
+
+            borderPane.setMaxWidth(320);
+            borderPane.setMaxHeight(320);
+
+            label.setText(cocktail.getName());
+            label.setId("cocktail-name");
+            nameHbox.setAlignment(Pos.TOP_CENTER);
+
+            nameHbox.getChildren().add(label);
+            borderPane.setBottom(nameHbox);
+
+            borderPane.setPrefHeight(240);
+            borderPane.setPrefWidth(240);
+            favoriteCocktailsGridPane.add(borderPane, colIndex, rowIndex);
+
+            colIndex++;
+            if (colIndex == gridColNumber) {
+                colIndex = 0;
+                rowIndex++;
+            }
+        }
+    }
+
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void initializeProfile(Profile profile) {
+        logger.info("initializeProfile " + profile);
+        this.profile = profile;
+        profileController = new ProfileController(profile);
+        setupFlavorMap();
+        setupProfileLabels();
+        loadFavoriteCocktails();
+    }
+
+    public SearchController getSearchController() {
+        return searchController;
+    }
+
+    public void setSearchController(SearchController searchController) {
+        this.searchController = searchController;
     }
 
     @Override

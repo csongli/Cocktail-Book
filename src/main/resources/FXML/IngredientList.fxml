@@ -12,12 +12,11 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.unideb.csongor.kolozsvari.cocktailbook.View.IngredientListController">
+<BorderPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.unideb.csongor.kolozsvari.cocktailbook.View.IngredientListController">
    <center>
       <ScrollPane hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="960.0" prefWidth="1280.0">
          <content>
-            <GridPane fx:id="ingredienListGridPane" gridLinesVisible="true">
+            <GridPane fx:id="ingredienListGridPane" gridLinesVisible="true" style="-fx-background-color: #F1F2EB;">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="256.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="256.0" prefWidth="100.0" />
@@ -35,10 +34,10 @@
       </ScrollPane>
    </center>
    <top>
-      <HBox alignment="CENTER" prefHeight="50.0" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" prefHeight="50.0" styleClass="header" BorderPane.alignment="CENTER">
          <children>
             <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-            <Label alignment="CENTER" text="Ingredient List" HBox.hgrow="ALWAYS">
+            <Label alignment="CENTER" styleClass="headerTitle" text="Ingredient List" HBox.hgrow="ALWAYS">
                <font>
                   <Font size="20.0" />
                </font>

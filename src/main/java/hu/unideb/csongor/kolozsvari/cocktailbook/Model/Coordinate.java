@@ -32,11 +32,16 @@ public class Coordinate {
     public Coordinate() {
     }
 
+    /**
+     * Method for calculating if a coordinate is in a givan radius or not.
+     * @param other the other point
+     * @param radius the radius
+     * @return true if the coordinate is in the given radius, false if not.
+     */
     public boolean isInRadius(Coordinate other, double radius){
         return ((this.x + radius >= other.getX()) && (this.x - radius <= other.getX ()) &&
                 ((this.y + radius >= other.getY()) && (this.y - radius <= other.getY())));
     }
-
 
     /**
      * Getter method for x.
@@ -54,16 +59,27 @@ public class Coordinate {
         return y;
     }
 
-    /** Setter method for {@code x} coordinate. */
+    /**
+     * Setter method for {@code x} coordinate.
+     * @param x the value of the x coordinate on the flavor map.
+     */
     public void setX(Float x) {
         this.x = x;
     }
 
-    /** Setter method for {@code y} coordinate. */
+    /**
+     * Setter method for {@code y} coordinate.
+     * @param y the value of the y coordinate on the flavor map.
+     */
     public void setY(Float y) {
         this.y = y;
     }
 
+    /**
+     * The Coordinate equals method.
+     * @param o the objectmvn
+     * @return true if the two coordinates are the same, false if not.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -73,11 +89,19 @@ public class Coordinate {
                 Objects.equals(y, that.y);
     }
 
+    /**
+     * The Coordinate hascode method.
+     * @return the hashed object.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(x, y);
     }
 
+    /**
+     * The Coordinate toString method.
+     * @return the object formatted as a string.
+     */
     @Override
     public String toString() {
         return "Coordinate{" +

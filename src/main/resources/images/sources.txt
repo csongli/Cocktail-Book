@@ -1,1 +1,4 @@
-The images used in the applicaton can be found below:
+The images used in the application can be found below:
+ * Heart Icon - The Noun Project (https://thenounproject.com/search/?q=heart&i=1699583) under Creative Commons CCBY
+ * Tree Pattern - Subtle Patterns (https://www.toptal.com/designers/subtlepatterns/tree-bark/) under Creative Commons CC BY-SA 3.0
+ * Modified Cocktail Icon, used in logo - The Noun Project (https://thenounproject.com/term/cocktail/783093/)

@@ -1,17 +1,19 @@
+//CHECKSTYLE:OFF
 package hu.unideb.csongor.kolozsvari.cocktailbook.View;
 
 import hu.unideb.csongor.kolozsvari.cocktailbook.Controller.SearchController;
-import hu.unideb.csongor.kolozsvari.cocktailbook.Model.Cocktail;
 import hu.unideb.csongor.kolozsvari.cocktailbook.Model.Ingredient;
 import hu.unideb.csongor.kolozsvari.cocktailbook.Model.Profile;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -26,10 +28,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class IngredientListController implements Initializable {
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-    }
 
     Profile profile;
     SearchController searchController;
@@ -37,22 +35,8 @@ public class IngredientListController implements Initializable {
     public static final Logger logger = LoggerFactory.getLogger(CocktailListController.class);
     private final int gridColNumber = 5;
 
-    public SearchController getSearchController() {
-        return searchController;
-    }
-
-    public void setProfile(Profile profile) {
-        this.profile = profile;
-    }
-
-    public void setSearchController(SearchController searchController) {
-        this.searchController = searchController;
-        createIngredientBlocks(searchController.getSearchedIngredients());
-    }
-
     @FXML
     GridPane ingredienListGridPane;
-
     @FXML
     Button buttonBack;
 
@@ -69,8 +53,8 @@ public class IngredientListController implements Initializable {
             Scene scene = new Scene(root);
 
             MainWindowController mainWindowController = loader.getController();
-            mainWindowController.setProfile(profile);
-            mainWindowController.setSearchController(searchController);
+            mainWindowController.initializeProfile(profile);
+            mainWindowController.upadateSearchController(searchController);
 
             scene.getStylesheets().add("style.css");
             stage.setScene(scene);
@@ -100,33 +84,37 @@ public class IngredientListController implements Initializable {
         BorderPane borderPane = new BorderPane();
         ImageView imageView = new ImageView();
         HBox hbox = new HBox();
+        HBox nameHbox = new HBox();
         Label label = new Label();
         Button button = new Button();
+        ScrollPane scrollPane = new ScrollPane();
         Image image = new Image(getClass().getClassLoader().getResourceAsStream("images/placeholder.png"));
 
         if (getClass().getClassLoader().getResource("images/Ingredients/" + ingredient.getImgPath()) != null) {
             image = new Image(getClass().getClassLoader()
                     .getResourceAsStream("images/Ingredients/" + ingredient.getImgPath()));
         }
-        //borderPane.getStyleClass().add("ingredient-pane");
-        //borderPane.setId("ingredient-pane");
-
-        GridPane.setFillWidth(label, true);
-
+        scrollPane.setMaxHeight(180);
+        scrollPane.setMaxWidth(180);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setPannable(false);
+        scrollPane.setMouseTransparent(true);
         imageView.setImage(image);
-        imageView.setFitWidth(180);
-        imageView.setPreserveRatio(true);
 
-        borderPane.setCenter(imageView);
+        if(image.getHeight() > image.getWidth()){
+            imageView.setFitWidth(180);
+        } else{
+            imageView.setFitHeight(180);
+        }
+        imageView.setPreserveRatio(true);
+        scrollPane.setContent(imageView);
+        borderPane.setCenter(scrollPane);
         borderPane.setMaxWidth(320);
         borderPane.setMaxHeight(320);
-
         label.setText(ingredient.getName());
-        //label.setId("ingredient-name");
-        //label.getStylesheets().add("font-button");
-
+        label.setId("ingredient-name");
         button.setText(added ? "Remove" : "Add");
-
         button.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
             if(searchController.getSearchedIngredients().contains(ingredient)){
                 button.setText("Add");
@@ -137,13 +125,33 @@ public class IngredientListController implements Initializable {
             }
             event.consume();
         });
+        button.setScaleX(0.60);
+        button.setScaleY(0.60);
 
         hbox.getChildren().add(label);
+        hbox.setSpacing(10);
+        hbox.setAlignment(Pos.TOP_CENTER);
         hbox.getChildren().add(button);
-
         borderPane.setBottom(hbox);
-
         ingredienListGridPane.add(borderPane, colIndex, rowIndex);
+    }
+
+    public SearchController getSearchController() {
+        return searchController;
+    }
+
+    public void initializeProfile(Profile profile) {
+        this.profile = profile;
+    }
+
+    public void updateSearchController(SearchController searchController) {
+        this.searchController = searchController;
+        createIngredientBlocks(searchController.getSearchedIngredients());
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
     }
 
 }

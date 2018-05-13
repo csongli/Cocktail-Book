@@ -12,12 +12,23 @@ public enum QuantityType {
     Grams("grams"),
     Dash("dashes");
 
+    /**
+     * The formatted version of the QuantityType.
+     */
     private String toPrint;
 
+    /**
+     * The constructor for QuantityType.
+     * @param toPrint the formatted version of the QuantityType.
+     */
     QuantityType(String toPrint) {
         this.toPrint = toPrint;
     }
 
+    /**
+     * The QuantityType toString method.
+     * @return the object formatted as a string.
+     */
     @Override
     public String toString() {
         return toPrint;

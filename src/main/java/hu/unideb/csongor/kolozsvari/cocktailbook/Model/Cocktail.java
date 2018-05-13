@@ -15,7 +15,7 @@ public class Cocktail {
     @Expose(serialize = true, deserialize = true)
     private Set<Pair<Ingredient,Quantity>> ingredients;
 
-    /** The coordinate of the cocktail on the flavor map*/
+    /** The coordinate of the cocktail on the flavor map.*/
     @Expose(serialize = true, deserialize = true)
     private Coordinate flavorMapCoordinate;
 
@@ -32,7 +32,7 @@ public class Cocktail {
     private String imgPath;
 
     @Expose(serialize = false, deserialize = false)
-    private static List<Cocktail> allCocktails;
+    private static List<Cocktail> allCocktails = new ArrayList<>();
 
     /**
      * Constructor for the cocktail class.
@@ -55,19 +55,17 @@ public class Cocktail {
      */
     public Cocktail() { }
 
-    //todo some javadocs
-
     /**
-     *
-     * @return
+     * Getter method for allCocktails.
+     * @return a list of all the cocktails.
      */
     public static List<Cocktail> getAllCocktails() {
         return allCocktails;
     }
 
     /**
-     *
-     * @param allCocktails
+     * Setter method for {@code allCocktails}.
+     * @param allCocktails list of all cocktails.
      */
     public static void setAllCocktails(List<Cocktail> allCocktails) {
         Cocktail.allCocktails = allCocktails;
@@ -113,40 +111,68 @@ public class Cocktail {
         return imgPath;
     }
 
-    /** Setter method for {@code ingredients}. */
+    /**
+     * Setter method for {@code ingredients}.
+     * @param ingredients set of ingredient and quantity pairs for the cocktail.
+     */
     public void setIngredients(Set<Pair<Ingredient, Quantity>> ingredients) {
         this.ingredients = ingredients;
     }
 
-    /** Setter method for {@code flavorMapCoordinate}. */
+    /**
+     * Setter method for {@code flavorMapCoordinate}.
+     * @param flavorMapCoordinate coordinate on theflavor map.
+     */
     public void setFlavorMapCoordinate(Coordinate flavorMapCoordinate) {
         this.flavorMapCoordinate = flavorMapCoordinate;
     }
 
-    /** Setter method for {@code name}. */
+    /**
+     * Setter method for {@code name}.
+     * @param name the name of the cocktail.
+     */
     public void setName(String name) {
         this.name = name;
     }
 
-    /** Setter method for {@code description}. */
+    /**
+     * Setter method for {@code description}.
+     * @param description the description of the cocktail.
+     */
     public void setDescription(String description) {
         this.description = description;
     }
 
-    /** Setter method for {@code imgPath}. */
+    /**
+     * Setter method for {@code imgPath}.
+     * @param imgPath the file path for the image of the cocktail.
+     */
     public void setImgPath(String imgPath) {
         this.imgPath = imgPath;
     }
 
+    /**
+     * Getter method for IngredientNames.
+     * @return the list of ingredients.
+     */
     public ArrayList<String> getIngredientNames(){
         return (ArrayList) ingredients.stream().map((e) -> e.getKey().getName()).collect(Collectors.toList());
     }
 
+    /**
+     * Getter method for IngredientQuantities.
+     * @return a list of the ingredient quantities.
+     */
     public ArrayList<String> getIngredientQuanities(){
         return (ArrayList) ingredients.stream().map((e) -> e.getValue().getAmount() + " " + e.getValue().getType())
                 .collect(Collectors.toList());
     }
 
+    /**
+     * The Cocktail equals method.
+     * @param o the object.
+     * @return true if objects are the same, false if not.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -159,12 +185,20 @@ public class Cocktail {
                 Objects.equals(imgPath, cocktail.imgPath);
     }
 
+    /**
+     * The Cocktail hashcode method.
+     * @return the hashed object.
+     */
     @Override
     public int hashCode() {
 
         return Objects.hash(ingredients, flavorMapCoordinate, name, description, imgPath);
     }
 
+    /**
+     * The Cocktail toString method.
+     * @return the object formatted as a string.
+     */
     @Override
     public String toString() {
         return "Cocktail{" +

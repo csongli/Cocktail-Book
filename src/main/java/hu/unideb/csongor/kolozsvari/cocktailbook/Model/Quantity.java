@@ -12,7 +12,7 @@ public class Quantity {
     @Expose(serialize = true, deserialize = true)
     private QuantityType type;
 
-    /** Amount of quantity*/
+    /** Amount of quantity.*/
     @Expose(serialize = true, deserialize = true)
     private Float amount;
 
@@ -48,16 +48,27 @@ public class Quantity {
         return amount;
     }
 
-    /** Setter method for {@code type}. */
+    /**
+     * Setter method for {@code type}.
+     * @param type the type to set.
+     */
     public void setType(QuantityType type) {
         this.type = type;
     }
 
-    /** Setter method for {@code amount}. */
+    /**
+     * Setter method for {@code amount}.
+     * @param amount the amount to set.
+     */
     public void setAmount(Float amount) {
         this.amount = amount;
     }
 
+    /**
+     * The Quantity equals method.
+     * @param o the object to check.
+     * @return true if objects are the same, false if not.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -67,6 +78,10 @@ public class Quantity {
                 Objects.equals(amount, quantity.amount);
     }
 
+    /**
+     * The Quantity hashcode method.
+     * @return the hashed object.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(type, amount);

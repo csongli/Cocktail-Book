@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -16,8 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.unideb.csongor.kolozsvari.cocktailbook.View.ProfileViewController">
+<BorderPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.unideb.csongor.kolozsvari.cocktailbook.View.ProfileViewController">
    <center>
       <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0">
          <children>
@@ -45,7 +43,7 @@
                   </FlowPane>
                   <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                      <content>
-                        <GridPane gridLinesVisible="true">
+                        <GridPane fx:id="favoriteCocktailsGridPane" style="-fx-background-color: #F1F2EB;">
                           <columnConstraints>
                             <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="200.0" minWidth="160.0" prefWidth="200.0" />
                               <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="200.0" minWidth="160.0" prefWidth="200.0" />
@@ -53,8 +51,6 @@
                           </columnConstraints>
                           <rowConstraints>
                             <RowConstraints maxHeight="200.0" minHeight="200.0" prefHeight="200.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="200.0" minHeight="200.0" prefHeight="130.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="200.0" minHeight="200.0" prefHeight="130.0" vgrow="SOMETIMES" />
                               <RowConstraints maxHeight="200.0" minHeight="200.0" prefHeight="130.0" vgrow="SOMETIMES" />
                               <RowConstraints maxHeight="200.0" minHeight="200.0" prefHeight="130.0" vgrow="SOMETIMES" />
                           </rowConstraints>
@@ -109,10 +105,10 @@
       </HBox>
    </center>
    <top>
-      <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" styleClass="header" BorderPane.alignment="CENTER">
          <children>
             <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-            <Label text="Profile">
+            <Label styleClass="headerTitle" text="Profile">
                <font>
                   <Font size="20.0" />
                </font>
@@ -126,7 +122,4 @@
          </children>
       </HBox>
    </top>
-   <bottom>
-      <Canvas fx:id="flavorMapCanvas" height="500.0" visible="false" width="500.0" BorderPane.alignment="CENTER" />
-   </bottom>
 </BorderPane>

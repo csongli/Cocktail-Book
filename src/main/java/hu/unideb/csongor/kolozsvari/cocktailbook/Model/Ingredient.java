@@ -2,6 +2,7 @@ package hu.unideb.csongor.kolozsvari.cocktailbook.Model;
 
 import com.google.gson.annotations.Expose;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,8 +26,9 @@ public class Ingredient {
     @Expose(serialize = true, deserialize = true)
     private String imgPath;
 
+    /**The list of all ingredients. */
     @Expose(serialize = false, deserialize = false)
-    private static List<Ingredient> allIngredients;
+    private static List<Ingredient> allIngredients = new ArrayList<>();
 
     /**
      * Construcor for the ingredient class.
@@ -48,11 +50,18 @@ public class Ingredient {
     public Ingredient() {
     }
 
-
+    /**
+     * Setter method for {@code allIngredients}.
+     * @param allIngredients list of all ingredients.
+     */
     public static void setAllIngredients(List<Ingredient> allIngredients) {
         Ingredient.allIngredients = allIngredients;
     }
 
+    /**
+     * Getter method for allIngredients.
+     * @return a list of all the ingredients.
+     */
     public static List<Ingredient> getAllIngredients() {
         return allIngredients;
     }
@@ -89,26 +98,42 @@ public class Ingredient {
         return imgPath;
     }
 
-    /** Setter method for {@code type}. */
+    /**
+     * Setter method for {@code type}.
+     * @param type the type of the ingredient.
+     */
     public void setType(IngredientType type) {
         this.type = type;
     }
 
-    /** Setter method for {@code subType}. */
+    /**
+     * Setter method for {@code subType}.
+     * @param subType the sub type of the ingredient.
+     */
     public void setSubType(IngredientSubType subType) {
         this.subType = subType;
     }
 
-    /** Setter method for {@code name}. */
+    /**
+     * Setter method for {@code name}.
+     * @param name the name of the ingredient.
+     * */
     public void setName(String name) {
         this.name = name;
     }
 
-    /** Setter method for {@code imgPath}. */
+    /**
+     *  Setter method for {@code imgPath}.
+     * @param imgPath the file path of the image for the ingredient.
+     * */
     public void setImgPath(String imgPath) {
         this.imgPath = imgPath;
     }
 
+    /**
+     * The Ingredient toString method.
+     * @return the object formatted as a string.
+     */
     @Override
     public String toString() {
         return "Ingredient{" +
@@ -119,6 +144,11 @@ public class Ingredient {
                 '}';
     }
 
+    /**
+     * The Ingredient equals method.
+     * @param o the object
+     * @return true if objects are the same, false if not.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -130,6 +160,10 @@ public class Ingredient {
                 Objects.equals(imgPath, that.imgPath);
     }
 
+    /**
+     * The Ingredient hashcode method.
+     * @return the hashed object.
+     */
     @Override
     public int hashCode() {
 

@@ -1,7 +1,5 @@
 package hu.unideb.csongor.kolozsvari.cocktailbook.Model;
 
-import com.google.gson.annotations.Expose;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,21 +62,34 @@ public class Profile {
         return recommendationRadius;
     }
 
-    /** Setter method for {@code favouriteCocktails}. */
+    /**
+     * Setter method for {@code favouriteCocktails}.
+     * @param favouriteCocktails the {@code Cocktail} to set.
+     */
     public void setFavouriteCocktails(List<Cocktail> favouriteCocktails) {
         this.favouriteCocktails = favouriteCocktails;
     }
 
-    /** Setter method for {@code myFlavorMapPoint}. */
+    /**
+     * Setter method for {@code myFlavorMapPoint}.
+     * @param myFlavorMapPoint the {@code Coordinate} to set.
+     */
     public void setMyFlavorMapPoint(Coordinate myFlavorMapPoint) {
         this.myFlavorMapPoint = myFlavorMapPoint;
     }
 
-    /** Setter method for {@code recommendationRadius}. */
+    /**
+     * Setter method for {@code recommendationRadius}.
+     * @param recommendationRadius the radius to set.
+     */
     public void setRecommendationRadius(double recommendationRadius) {
         this.recommendationRadius = recommendationRadius;
     }
 
+    /**
+     * The Profile toString method.
+     * @return the object formatted as a string.
+     */
     @Override
     public String toString() {
         return "Profile{" +

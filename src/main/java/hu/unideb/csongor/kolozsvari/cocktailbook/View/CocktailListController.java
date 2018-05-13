@@ -1,16 +1,15 @@
+//CHECKSTYLE:OFF
 package hu.unideb.csongor.kolozsvari.cocktailbook.View;
 
-import hu.unideb.csongor.kolozsvari.cocktailbook.Controller.LoadController;
-import hu.unideb.csongor.kolozsvari.cocktailbook.Controller.Main;
 import hu.unideb.csongor.kolozsvari.cocktailbook.Controller.ProfileController;
 import hu.unideb.csongor.kolozsvari.cocktailbook.Controller.SearchController;
 import hu.unideb.csongor.kolozsvari.cocktailbook.Model.Cocktail;
 import hu.unideb.csongor.kolozsvari.cocktailbook.Model.Profile;
-import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -36,29 +35,12 @@ public class CocktailListController implements Initializable {
     ProfileController profileController;
     SearchController searchController;
 
-    public Profile getProfile() {
-        return profile;
-    }
-
-    public void setProfile(Profile profile) {
-        this.profile = profile;
-        this.profileController = new ProfileController(profile);
-    }
-
-    public SearchController getSearchController() {
-        return searchController;
-    }
-
-    public void setSearchController(SearchController searchController) {
-        this.searchController = searchController;
-    }
-
     public static final Logger logger = LoggerFactory.getLogger(CocktailListController.class);
-    private final int gridColNumber = 5;
-    private String labelStyle = "-fx-font- ; -fx-background-color: slateblue; -fx-text-fill: white;";
 
+    private final int gridColNumber = 5;
     @FXML
     Pane transparentShadowPane;
+
     @FXML
     BorderPane cocktailDetailsPane;
     @FXML
@@ -83,9 +65,8 @@ public class CocktailListController implements Initializable {
     Button cocktailListBackButton;
     @FXML
     ScrollPane cocktailsScrollPane;
-
     @FXML
-    private void handleCocktailListBackButtonAction(ActionEvent event){
+    private void handleCocktailListBackButtonAction(ActionEvent event) {
         logger.info("Clicked Back button on Cocktail List. Going to MainWindow view.");
         Stage stage;
         Parent root;
@@ -96,8 +77,8 @@ public class CocktailListController implements Initializable {
             stage = (Stage) cocktailListBackButton.getScene().getWindow();
             Scene scene = new Scene(root);
             MainWindowController mainWindowController = loader.getController();
-            mainWindowController.setProfile(profile);
-            mainWindowController.setSearchController(searchController);
+            mainWindowController.initializeProfile(profile);
+            mainWindowController.upadateSearchController(searchController);
 
             scene.getStylesheets().add("style.css");
             stage.setScene(scene);
@@ -127,6 +108,7 @@ public class CocktailListController implements Initializable {
         BorderPane borderPane = new BorderPane();
         ImageView imageView = new ImageView();
         ScrollPane scrollPane = new ScrollPane();
+        HBox nameHbox = new HBox();
 
         Label label = new Label();
         borderPane.getStyleClass().add("cocktail-pane");
@@ -142,16 +124,18 @@ public class CocktailListController implements Initializable {
 
         scrollPane.setMaxHeight(180);
         scrollPane.setMaxWidth(180);
-
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setPannable(false);
+        scrollPane.setMouseTransparent(true);
 
         imageView.setImage(image);
-        if(image.getHeight() > image.getWidth()){
+        if (image.getHeight() > image.getWidth()) {
             imageView.setFitWidth(180);
-        } else{
+        } else {
             imageView.setFitHeight(180);
         }
+
 
         imageView.setPreserveRatio(true);
         scrollPane.setContent(imageView);
@@ -163,8 +147,9 @@ public class CocktailListController implements Initializable {
 
         label.setText(cocktail.getName());
         label.setId("cocktail-name");
-        //label.getStylesheets().add("font-button");
-        borderPane.setBottom(label);
+        nameHbox.setAlignment(Pos.CENTER);
+        nameHbox.getChildren().add(label);
+        borderPane.setBottom(nameHbox);
 
         borderPane.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
             showCocktailDetail(cocktail);
@@ -204,27 +189,23 @@ public class CocktailListController implements Initializable {
             cocktailImage = new Image(getClass().getClassLoader()
                     .getResourceAsStream("images/Cocktails/" + cocktail.getImgPath()));
         }
+        cocktailImageView.setTranslateX(-cocktailImage.getWidth() / 2 + 30);
+        if (cocktailImage.getHeight() >= 860) {
+            cocktailImageView.setFitWidth(cocktailImage.getWidth());
+        }
 
         cocktailImageView.setImage(cocktailImage);
-        addCocktailToFavoritesButton.setText( profile.getFavouriteCocktails().contains(cocktail) ? "Remove from favorites" : "Add to favorites"  );
+        addCocktailToFavoritesButton.setText(profile.getFavouriteCocktails().contains(cocktail) ? "Remove from favorites" : "Add to favorites");
         addCocktailToFavoritesButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            logger.info("Clicked on button, isFavorited?  " + profile.getFavouriteCocktails().contains(cocktail));
-            logger.info("Profiles favorite cocktails: " + profile.getFavouriteCocktails());
-
-            logger.info("FavoriteCocktails1 : " + profile.getFavouriteCocktails().get(0));
-            logger.info("This cocktail : " + cocktail);
-            logger.info("ARe they equal? " + cocktail.equals(profile.getFavouriteCocktails().get(0)));
-
-
-            if( profile.getFavouriteCocktails().contains(cocktail) ){
+            if (profile.getFavouriteCocktails().contains(cocktail)) {
                 logger.info("Favorited, removing from favorites:");
                 profileController.removeCocktailFromFavourites(cocktail);
-                addCocktailToFavoritesButton.setText( "Add to favorites"  );
+                addCocktailToFavoritesButton.setText("Add to favorites");
             } else {
 
                 logger.info("Not favorited, favoriting:");
                 profileController.addCocktailToFavourites(cocktail);
-                addCocktailToFavoritesButton.setText( "Remove from favorites"  );
+                addCocktailToFavoritesButton.setText("Remove from favorites");
             }
             event.consume();
         });
@@ -240,17 +221,28 @@ public class CocktailListController implements Initializable {
         hideCocktailDetail();
     }
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
 
     public void setCocktailList(List<Cocktail> cocktails) {
         createCocktailBlocks(cocktails);
-       /* ChangeListener<Number> stageSizeListener = (observable, oldValue, newValue) ->
-                System.out.println("Height: " + stage.getHeight() + " Width: " + stage.getWidth());
+    }
 
-        stage.widthProperty().addListener(stageSizeListener);
-        stage.heightProperty().addListener(stageSizeListener);*/
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void initializeProfile(Profile profile) {
+        this.profile = profile;
+        this.profileController = new ProfileController(profile);
+    }
+
+    public SearchController getSearchController() {
+        return searchController;
+    }
+
+    public void updateSearchController(SearchController searchController) {
+        this.searchController = searchController;
     }
 }

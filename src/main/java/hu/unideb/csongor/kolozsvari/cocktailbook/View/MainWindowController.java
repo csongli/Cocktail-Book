@@ -1,3 +1,4 @@
+//CHECKSTYLE:OFF
 package hu.unideb.csongor.kolozsvari.cocktailbook.View;
 
 import hu.unideb.csongor.kolozsvari.cocktailbook.Controller.LoadController;
@@ -13,11 +14,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.controlsfx.control.textfield.TextFields;
@@ -36,9 +35,8 @@ public class MainWindowController implements Initializable {
 
     public static final Logger logger = LoggerFactory.getLogger(MainWindowController.class);
 
-    //todo refactor to match nameButton not buttonName;
     @FXML
-    HBox chosenIngredientsHBox;
+    FlowPane chosenIngredientsFlowPane;
     @FXML
     Button buttonCocktailList;
     @FXML
@@ -50,57 +48,28 @@ public class MainWindowController implements Initializable {
     @FXML
     Button buttonSearch;
     @FXML
-    Label ingredientListLabel;
-    @FXML
     TextField ingredientTextField;
     @FXML
     VBox vBox;
     @FXML
     FlowPane flowPane;
-
     @FXML
     TextField ingredientAddTextField;
-
-    public Profile getProfile() {
-        return profile;
-    }
-
-    public void setProfile(Profile profile) {
-        this.profile = profile;
-        this.profileController = new ProfileController(profile);
-        logger.info("MainWindow view, profile is: " + profile);
-    }
-
-    public void setSearchController(SearchController searchController) {
-        this.searchController = searchController;
-        if(!searchController.getSearchedIngredients().isEmpty()) {
-            updateAddedIngredients();
-
-        }
-        logger.info("MainWindow view, profile is: " + profile);
-    }
 
     private void updateAddedIngredients(){
         logger.info("Updating added ingredients!");
         logger.info("Ingredients are:" + searchController.getSearchedIngredients());
-        String ingredients = new String();
         Label label;
-        chosenIngredientsHBox.getChildren().clear();
+        chosenIngredientsFlowPane.getChildren().clear();
         for(Ingredient ingredient: searchController.getSearchedIngredients()) {
             label = new Label();
             label.setText(ingredient.getName());
-            chosenIngredientsHBox.getChildren().add(label);
-
-            ingredients += ingredient.getName() + "\n";
-        }
-        //ingredientListLabel.setText(ingredients);
+            chosenIngredientsFlowPane.getChildren().add(label); }
     }
 
     private void setupIngredientsDropdownBox(){
-        //TextField textField = TextFields.createClearableTextField();
         TextFields.bindAutoCompletion(ingredientTextField, searchController.collectIngredientNames(Ingredient.getAllIngredients()));
         ingredientAddTextField = ingredientTextField;
-        //flowPane.getChildren().add(ingredientTextField);
     }
 
     @FXML
@@ -114,9 +83,9 @@ public class MainWindowController implements Initializable {
             root = loader.load();
 
             CocktailListController controller = loader.getController();
-            controller.setProfile(profile);
+            controller.initializeProfile(profile);
             controller.setCocktailList(Cocktail.getAllCocktails());
-            controller.setSearchController(searchController);
+            controller.updateSearchController(searchController);
 
             stage = (Stage) buttonCocktailList.getScene().getWindow();
 
@@ -160,8 +129,8 @@ public class MainWindowController implements Initializable {
             Scene scene = new Scene(root);
 
             IngredientListController ingredientListController = loader.getController();
-            ingredientListController.setSearchController(searchController);
-            ingredientListController.setProfile(profile);
+            ingredientListController.updateSearchController(searchController);
+            ingredientListController.initializeProfile(profile);
 
             scene.getStylesheets().add("style.css");
             stage.setScene(scene);
@@ -190,7 +159,7 @@ public class MainWindowController implements Initializable {
             profileController.calculateFlavorMapPoint(profile.getFavouriteCocktails());
             ProfileViewController profileViewController = loader.getController();
             profileViewController.setSearchController(searchController);
-            profileViewController.setProfile(profile);
+            profileViewController.initializeProfile(profile);
 
             scene.getStylesheets().add("style.css");
             stage.setScene(scene);
@@ -213,8 +182,8 @@ public class MainWindowController implements Initializable {
             Scene scene = new Scene(root);
 
             CocktailListController cocktailListController = loader.getController();
-            cocktailListController.setProfile(profile);
-            cocktailListController.setSearchController(searchController);
+            cocktailListController.initializeProfile(profile);
+            cocktailListController.updateSearchController(searchController);
             cocktailListController.setCocktailList(searchController.search());
 
             scene.getStylesheets().add("style.css");
@@ -223,6 +192,25 @@ public class MainWindowController implements Initializable {
         } catch (IOException e) {
             logger.error("IOException on Search button: " + e.getMessage());
         }
+    }
+
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void initializeProfile(Profile profile) {
+        this.profile = profile;
+        this.profileController = new ProfileController(profile);
+        logger.info("MainWindow view, profile is: " + profile);
+    }
+
+    public void upadateSearchController(SearchController searchController) {
+        this.searchController = searchController;
+        if(!searchController.getSearchedIngredients().isEmpty()) {
+            updateAddedIngredients();
+
+        }
+        logger.info("MainWindow view, profile is: " + profile);
     }
 
     @Override

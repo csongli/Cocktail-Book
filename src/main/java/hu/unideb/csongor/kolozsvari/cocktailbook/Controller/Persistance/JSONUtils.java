@@ -14,27 +14,31 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+/** Utility class for reading and writing JSONs. */
 public class JSONUtils {
-    public static final Logger logger = LoggerFactory.getLogger(JSONUtils.class);
 
+    /** Logger. */
+    public static final Logger logger = LoggerFactory.getLogger(JSONUtils.class);
+    /** GSON Builder object. */
     final GsonBuilder gsonBuilder = new GsonBuilder().setPrettyPrinting().serializeNulls().enableComplexMapKeySerialization();
+    /** JSON serializer and deserializer. */
     final Gson gson = gsonBuilder.registerTypeAdapter(Pair.class, new PairSerializer()).setPrettyPrinting().create();
 
+    /**
+     * Serializes a profile.
+     * @param profile the {@code Profile} to serialize.
+     * @return the JSON as a String.
+     */
     public String serializeProfile(Profile profile){
         String json = gson.toJson(profile);
         return json;
     }
 
-    public String serializeCocktail(Cocktail cocktail){
-        String json = gson.toJson(cocktail);
-        return json;
-    }
-
-    public String serializeIngredient(Ingredient ingredient){
-        String json = gson.toJson(ingredient);
-        return json;
-    }
-
+    /**
+     * Deserializes a profile.
+     * @param json the JSON containing the serialized {@code Profile}.
+     * @return the Profile read from the JSON.
+     */
     public Profile deserializeProfile(String json){
         Profile profile = new Profile();
         profile = gson.fromJson(json, Profile.class);
@@ -42,19 +46,11 @@ public class JSONUtils {
         return profile;
     }
 
-    public Cocktail deserializeCocktail(String json){
-        Cocktail cocktail = new Cocktail();
-        cocktail = gson.fromJson(json, Cocktail.class);
-        logger.info("The deserialized cocktail:\n{}", cocktail);
-        return cocktail;
-    }
-
-    public Ingredient deserializeIngredient(String json){
-        Ingredient ingredient = gson.fromJson(json, Ingredient.class);
-        logger.info("The deserialized ingredient:\n{}", ingredient);
-        return ingredient;
-    }
-
+    /**
+     * Deserializes a cocktail list.
+     * @param json the JSON containing the serialized {@code Cocktail} objects.
+     * @return the list of cocktails read from the JSON.
+     */
     public List<CocktailEntity> deserializeCocktailList(String json){
         Type listType = new TypeToken<ArrayList<CocktailEntity>>(){}.getType();
         List<CocktailEntity> cocktailEntities = gson.fromJson(json, listType);
@@ -62,6 +58,11 @@ public class JSONUtils {
         return cocktailEntities;
     }
 
+    /**
+     * Deserializes a ingredient list.
+     * @param json the JSON containing the serialized {@code Ingredient} objects.
+     * @return the list of ingredients read from the JSON.
+     */
     public List<Ingredient> deserializeIngredientList(String json){
         Type listType = new TypeToken<ArrayList<Ingredient>>(){}.getType();
         List<Ingredient> ingredients = gson.fromJson(json, listType);
@@ -69,6 +70,11 @@ public class JSONUtils {
         return ingredients;
     }
 
+    /**
+     * Reads a JSON into a String.
+     * @param filePath relative path to the file containing the JSON.
+     * @return String containing the JSON.
+     */
     public String readJSONfromFile (String filePath){
         logger.info("Reading file: " + filePath);
         String result = "";
