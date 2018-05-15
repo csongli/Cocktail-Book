@@ -3,7 +3,7 @@
 		"name":"Lime",
 		"type":"Fruit",
 		"subType":"None",
-		"imgPath":"lime.jpg"
+		"imgPath":"lime.png"
 	},
 	{
 		"name":"London Dry Gin",
@@ -69,7 +69,7 @@
 		"name":"Campari",
 		"type":"Liqueur",
 		"subType":"Other",
-		"imgPath":"campari.jpg"
+		"imgPath":"campari.jpeg"
 	},
 	{
 		"name":"Lemon",

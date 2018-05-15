@@ -49,7 +49,7 @@ public class LoadControllerTest {
         Assert.assertNotEquals(Cocktail.getAllCocktails().size(), 0);
 
         Set<Pair<Ingredient, Quantity>> myset = new HashSet<Pair<Ingredient, Quantity>>();
-        Ingredient lime = new Ingredient(IngredientType.Fruit, IngredientSubType.None, "Lime", "lime.jpg");
+        Ingredient lime = new Ingredient(IngredientType.Fruit, IngredientSubType.None, "Lime", "lime.png");
         Quantity quantity = new Quantity(QuantityType.Ounce, (float) 4);
         myset.add(new Pair(lime, quantity));
         Coordinate flavorpoint = new Coordinate((float) 5, (float) 5);
