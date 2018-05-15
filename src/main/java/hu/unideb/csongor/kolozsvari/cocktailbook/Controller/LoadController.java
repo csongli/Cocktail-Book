@@ -33,6 +33,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -54,6 +55,14 @@ public class LoadController {
     public static final Logger logger = LoggerFactory.getLogger(LoadController.class);
     /** Utility object for reading and writing JSONs. */
     private final JSONUtils jsonUtils = new JSONUtils();
+
+    /**
+     * Empty constructor for LoadController.
+     */
+    public LoadController(){
+        Cocktail.setAllCocktails(new ArrayList<>());
+        Ingredient.setAllIngredients(new ArrayList<>());
+    }
 
     /**
      * Saves the profile.
