@@ -11,6 +11,7 @@ Todo List
 * Database - Done!
 * Logging - Done!
 * License - Done!
+* Crop images - wip
 
 Usage
 -----
