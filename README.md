@@ -5,10 +5,10 @@ The Last Word, named for a delicious cocktail, is an application where you can m
 
 Todo List
 ------------
-* Business logic - wip
-* Unit Tests - wip
-* JavaFX user interface - wip
-* Database - wip
+* Business logic - Done!
+* Unit Tests - Done!
+* JavaFX user interface - Done!
+* Database - Done!
 * Logging - Done!
 * License - Done!
 
