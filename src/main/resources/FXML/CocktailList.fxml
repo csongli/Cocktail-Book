@@ -78,7 +78,7 @@
                               <Insets bottom="10.0" />
                            </VBox.margin>
                         </Label>
-                        <GridPane prefHeight="120.0" prefWidth="430.0" VBox.vgrow="ALWAYS">
+                        <GridPane prefHeight="120.0" maxHeight="400" prefWidth="430.0" VBox.vgrow="SOMETIMES">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -118,21 +118,7 @@
                               <Insets bottom="10.0" left="100.0" right="30.0" />
                            </VBox.margin>
                         </GridPane>
-                        <TextArea fx:id="cocktailDescriptionTextArea" editable="false" focusTraversable="false" mouseTransparent="true" text="Add all ingredients to a shaker and fill with ice.&#10;Shake, and strain into a chilled cocktail glass.&#10;Garnish with a lemon twist.&#10;" wrapText="true" VBox.vgrow="SOMETIMES">
-                           <padding>
-                              <Insets left="25.0" right="25.0" />
-                           </padding>
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                           <effect>
-                              <Blend />
-                           </effect>
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                        </TextArea>
-                        <Button fx:id="addCocktailToFavoritesButton" contentDisplay="RIGHT" graphicTextGap="15.0" mnemonicParsing="false" text="Favorite">
+						<Button fx:id="addCocktailToFavoritesButton" contentDisplay="RIGHT" graphicTextGap="15.0" mnemonicParsing="false" text="Favorite">
                            <padding>
                               <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                            </padding>
@@ -150,6 +136,20 @@
                               <Font size="20.0" />
                            </font>
                         </Button>
+                        <TextArea fx:id="cocktailDescriptionTextArea" editable="false" focusTraversable="false" mouseTransparent="true" text="Add all ingredients to a shaker and fill with ice.&#10;Shake, and strain into a chilled cocktail glass.&#10;Garnish with a lemon twist.&#10;" wrapText="true" VBox.vgrow="SOMETIMES">
+                           <padding>
+                              <Insets left="25.0" right="25.0" />
+                           </padding>
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <effect>
+                              <Blend />
+                           </effect>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </TextArea>
                         <Pane prefHeight="20.0" prefWidth="200.0" VBox.vgrow="NEVER" />
                      </children>
                   </VBox>
